@@ -18,7 +18,13 @@ router.get('/registerUser', function(req, res, next) {
    username : 'Username', password : 'Password', email : 'Email'});
 });
 
-router.post('/success',function(req,res,next){
+/*router.get('/success',function(req,res,next){
+	res.render('success',{title : 'Account created Successfully!',link1 : 'To Login Page!'});
+});*/
+
+
+
+router.post('/register',function(req,res,next){
 	var user = {
 		firstName : req.body.fname,
 		lastName : req.body.lname,
@@ -26,17 +32,29 @@ router.post('/success',function(req,res,next){
 		email : req.body.ename,
 		password : req.body.pwd
 	};
+	var login = {
+		username : req.body.uname,
+		password : req.body.pwd
+	};
 
 	mongo.connect(url,function(err,db){
 		assert.equal(null,err);
-		db.collection('user-data').insert(user);
+		db.collection('userData').insertOne(user,function(err,result){
+			assert.equal(null,err);
+			console.log('Inserted Successfully');
+		});
+		db.collection('loginData').insertOne(login,function(err,result){
+			assert.equal(null,err);
+			console.log('Inserted in Login!');
+			db.close();
+			//res.render('index',{title:'Welcome', link1 : 'New User? Register!' ,link2: 'Existing user? Login!'});
+			res.render('success',{title : 'Account created Successfully!',link1 : 'To Login Page!'});
+		});
 	});
 });
 
 
-router.get('/success',function(req,res,next){
-	res.render('success',{title : 'Account created Successfully!',link1 : 'To Login Page!'});
-});
+
 
 
 

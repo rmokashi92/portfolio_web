@@ -36,15 +36,15 @@ router.get('/registerUser', function(req, res, next) {
    			 {
     		var pass = result[0].password;
     		if(pass == req.body.pwd){
-    			res.render('home', {title: 'Hello,' , username : req.body.uname});
+    			res.render('home', {title: 'Hello,' , username : req.body.uname , link1 : 'Logout'});
     		}
     		else{
-    			res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password'});
+    			res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password' , spanText : "Password doesn't match! Try Again"});
     		}
     		db.close();
     	}
     	else{
-    		res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password'});
+    		res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password' , spanText : "Invalid Username! Try Again"});
     	}});
 		});
 
@@ -79,6 +79,12 @@ router.post('/register',function(req,res,next){
 			res.render('success',{title : 'Account created Successfully!',link1 : 'To Login Page!'});
 		});
 	});
+});
+
+
+router.get('/logout', function(req, res, next) {
+  //res.render('index', { title: 'Welcome' ,username : 'Username', password : 'Password', layout : 'loginlayout'});
+  res.render('index',{title:'Welcome', link1 : 'New User? Register!' ,link2: 'Existing user? Login!'});
 });
 
 

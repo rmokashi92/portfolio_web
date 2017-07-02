@@ -2,8 +2,8 @@
 
 <h1>{{title}}</h1>
 <div>
-<form>
-{{username}} : <input type = "email" id = "uname" name = "uname" placeholder = "Enter Username"/><br><br>
+<form method = "post" action = "/verify">
+{{username}} : <input type = "text" id = "uname" name = "uname" placeholder = "Enter Username"/><br><br>
 {{password}} : <input type = "password" id = "pwd" name = "pwd" placeholder = "Enter Password"/><br><br>
 
 <input type = "Submit" id = "login" value = "Login"/>

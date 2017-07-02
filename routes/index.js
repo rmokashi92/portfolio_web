@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
 var assert = require('assert');
+var mongodb = require('mongodb').MongoClient;
+
 
 var url = 'mongodb://localhost:27017/mydata';
 
@@ -21,6 +23,27 @@ router.get('/registerUser', function(req, res, next) {
 /*router.get('/success',function(req,res,next){
 	res.render('success',{title : 'Account created Successfully!',link1 : 'To Login Page!'});
 });*/
+
+
+	router.post('/verify',function(req,res,next){
+
+		mongo.connect(url,function(err,db){
+			assert.equal(null,err);
+			var query = {username : req.body.uname};
+			db.collection("loginData").find(query).toArray(function(err, result) {
+   			 if (err) throw err;
+    		var pass = result[0].password;
+    		if(pass == req.body.pwd){
+    			res.render('home', {title: 'Hello,' , username : req.body.uname});
+    		}
+    		else{
+    			res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password'});
+    		}
+    		db.close();
+    	});
+		});
+
+	});
 
 
 
@@ -52,10 +75,6 @@ router.post('/register',function(req,res,next){
 		});
 	});
 });
-
-
-
-
 
 
 module.exports = router;

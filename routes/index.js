@@ -32,6 +32,8 @@ router.get('/registerUser', function(req, res, next) {
 			var query = {username : req.body.uname};
 			db.collection("loginData").find(query).toArray(function(err, result) {
    			 if (err) throw err;
+   			 if(result[0] != null)
+   			 {
     		var pass = result[0].password;
     		if(pass == req.body.pwd){
     			res.render('home', {title: 'Hello,' , username : req.body.uname});
@@ -40,7 +42,10 @@ router.get('/registerUser', function(req, res, next) {
     			res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password'});
     		}
     		db.close();
-    	});
+    	}
+    	else{
+    		res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password'});
+    	}});
 		});
 
 	});

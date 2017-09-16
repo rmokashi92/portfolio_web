@@ -36,7 +36,7 @@ router.get('/registerUser', function(req, res, next) {
    			 {
     		var pass = result[0].password;
     		if(pass == req.body.pwd){
-    			res.render('home', {title: 'Hello,' , username : req.body.uname , link1 : 'Logout'});
+    			res.render('home', {title: 'Hello,' , username : req.body.uname , link1 : 'Logout',layout:'home_layout.hbs'});
     		}
     		else{
     			res.render('login', { title: 'Login Page' ,username : 'Username', password : 'Password' , spanText : "Password doesn't match! Try Again"});
